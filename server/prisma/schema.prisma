@@ -1,0 +1,104 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Get a free hosted Postgres database in seconds: `npx create-db`
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum BillingCycle {
+  MONTHLY
+  YEARLY
+  WEEKLY
+  QUARTERLY
+}
+
+enum SubscriptionStatus {
+  ACTIVE
+  PAUSED
+  CANCELLED
+}
+
+model User {
+  id              String          @id @default(cuid())
+  name            String
+  email           String          @unique
+  passwordHash    String
+
+  categories      Category[]
+  subscriptions   Subscription[]
+  notifications   Notification[]
+
+  createdAt       DateTime        @default(now())
+  updatedAt       DateTime        @updatedAt
+}
+
+model Category {
+  id              String          @id @default(cuid())
+  name            String
+  icon            String?
+  color           String?
+
+  userId          String
+  user            User            @relation(fields: [userId], references: [id])
+
+  subscriptions   Subscription[]
+
+  createdAt       DateTime        @default(now())
+  updatedAt       DateTime        @updatedAt
+}
+
+model Subscription {
+  id              String               @id @default(cuid())
+
+  name            String
+  price           Float
+  currency        String
+
+  billingCycle    BillingCycle
+
+  renewalDate     DateTime
+  startDate       DateTime
+
+  paymentMethod   String?
+
+  autoRenew       Boolean              @default(true)
+
+  status          SubscriptionStatus   @default(ACTIVE)
+
+  notes           String?
+
+  logo            String?
+
+  userId          String
+  user            User                 @relation(fields: [userId], references: [id])
+
+  categoryId      String
+  category        Category             @relation(fields: [categoryId], references: [id])
+
+  createdAt       DateTime             @default(now())
+  updatedAt       DateTime             @updatedAt
+
+  @@index([userId])
+  @@index([categoryId])
+  @@index([renewalDate])
+}
+
+model Notification {
+  id          String      @id @default(cuid())
+
+  title       String
+  message     String
+
+  isRead      Boolean     @default(false)
+
+  userId      String
+  user        User        @relation(fields: [userId], references: [id])
+
+  createdAt   DateTime    @default(now())
+}
