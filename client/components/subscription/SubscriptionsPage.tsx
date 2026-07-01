@@ -12,8 +12,11 @@ import { toast } from "sonner";
 import AddSubscriptionDialog from "@/components/subscription/AddSubscriptionDialog";
 
 export default function SubscriptionsPage() {
-  const { subscriptions, loading } = useSubscriptions();
-
+  const {
+  subscriptions,
+  loading,
+  refreshSubscriptions,
+} = useSubscriptions();
   const [search, setSearch] = useState("");
 
   const filteredSubscriptions = subscriptions.filter((subscription) =>
@@ -35,7 +38,7 @@ export default function SubscriptionsPage() {
       toast.success("Subscription deleted successfully!");
 
       // Temporary refresh
-      window.location.reload();
+      await refreshSubscriptions();
     } catch (error) {
       console.error(error);
       toast.error("Failed to delete subscription.");
@@ -66,7 +69,9 @@ export default function SubscriptionsPage() {
           </p>
         </div>
 
-        <AddSubscriptionDialog />
+        <AddSubscriptionDialog
+  onSuccess={refreshSubscriptions}
+/>
       </div>
 
       {/* Search */}
@@ -132,6 +137,7 @@ export default function SubscriptionsPage() {
                 <AddSubscriptionDialog
   subscription={subscription}
   trigger={<Button variant="outline">Edit</Button>}
+onSuccess={refreshSubscriptions}
 />
 
                 <Button

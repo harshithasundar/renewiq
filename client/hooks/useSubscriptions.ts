@@ -10,7 +10,9 @@ export interface Subscription {
   currency: string;
   renewalDate: string;
   billingCycle: string;
+  categoryId: string;
   category: {
+    id: string;
     name: string;
     icon: string;
     color: string;
@@ -21,21 +23,22 @@ export function useSubscriptions() {
   const [subscriptions, setSubscriptions] = useState<Subscription[]>([]);
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    async function fetchSubscriptions() {
-      try {
-        const data = await getSubscriptions();
-        setSubscriptions(data);
-      } finally {
-        setLoading(false);
-      }
-    }
+  const fetchSubscriptions = async () => {
+  try {
+    const data = await getSubscriptions();
+    setSubscriptions(data);
+  } finally {
+    setLoading(false);
+  }
+};
 
-    fetchSubscriptions();
-  }, []);
+useEffect(() => {
+  fetchSubscriptions();
+}, []);
 
-  return {
-    subscriptions,
-    loading,
-  };
+return {
+  subscriptions,
+  loading,
+  refreshSubscriptions: fetchSubscriptions,
+};
 }

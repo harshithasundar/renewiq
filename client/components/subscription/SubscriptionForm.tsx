@@ -20,7 +20,7 @@ import { toast } from "sonner";
 
 
 interface SubscriptionFormProps {
-  onSuccess: () => void;
+  onSuccess: () => Promise<void> | void;
   subscription?: any;
 }
 
@@ -102,10 +102,9 @@ console.log("SUBSCRIPTION", JSON.stringify(subscription, null, 2));
       logo: "",
     });
 
-    onSuccess();
+    await onSuccess();
 
     // Temporary refresh
-    window.location.reload();
   } catch (error) {
     console.error(error);
 

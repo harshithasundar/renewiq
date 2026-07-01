@@ -54,6 +54,7 @@ export const update = async (
   res: Response
 ) => {
   try {
+    console.log("UPDATE BODY:", req.body);
     const subscription = await updateSubscription(
       req.userId!,
       req.params.id as string,

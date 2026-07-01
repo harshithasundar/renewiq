@@ -17,3 +17,13 @@ export const createCategory = async (
 
   return category;
 };
+export const getCategories = async (userId: string) => {
+  return await prisma.category.findMany({
+    where: {
+      userId,
+    },
+    orderBy: {
+      createdAt: "desc",
+    },
+  });
+};

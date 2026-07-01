@@ -16,10 +16,11 @@ import SubscriptionForm from "./SubscriptionForm";
 interface AddSubscriptionDialogProps {
   subscription?: any;
   trigger?: React.ReactNode;
+  onSuccess?: () => void;
 }
 
 export default function AddSubscriptionDialog({
-  subscription, trigger,
+  subscription, trigger, onSuccess,
 }: AddSubscriptionDialogProps) {
   const [open, setOpen] = useState(false);
 
@@ -44,9 +45,12 @@ export default function AddSubscriptionDialog({
         </DialogHeader>
 
         <SubscriptionForm
-          subscription={subscription}
-          onSuccess={() => setOpen(false)}
-        />
+  subscription={subscription}
+  onSuccess={async () => {
+  await onSuccess?.();
+  setOpen(false);
+}}
+/>
       </DialogContent>
     </Dialog>
   );
