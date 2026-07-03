@@ -170,7 +170,7 @@ npm run dev
 ## 👩‍💻 Author
 
 Harshitha Sundar
-## 👩‍💻 About the Project
+
 
 ## 🌟 Acknowledgements
 
