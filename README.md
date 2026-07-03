@@ -107,8 +107,60 @@ RenewIQ
 │
 ├── 📄 README.md
 ├── 📄 .gitignore
-└── 📄 LICENSE (optional)
+
 ```
+
+## 📸 Screenshots
+
+### 📝 Register
+![Register](assets/register.png)
+
+---
+
+### 🔐 Login
+![Login](assets/login.png)
+
+---
+
+### 📊 Dashboard (Before Adding Subscriptions)
+![Dashboard Before](assets/dashboard-before.png)
+
+---
+
+### 📂 Subscriptions
+![Subscriptions](assets/subscriptions.png)
+
+---
+
+### ➕ Add Subscription
+![Add Subscription](assets/add-subscription.png)
+
+---
+
+### ✏️ Edit Subscription
+![Edit Subscription](assets/edit-subscription.png)
+
+---
+
+### 📊 Dashboard (After Adding Subscriptions)
+![Dashboard After](assets/dashboard-after.png)
+
+---
+
+### 🔔 Renewals
+![Renewals](assets/renewals.png)
+
+---
+
+### 📈 Analytics
+![Analytics](assets/analytics.png)
+
+---
+
+### ⚙️ Settings
+![Settings](assets/settings.png)
+
+
 
 ## 🚀 Getting Started
 
@@ -156,6 +208,26 @@ npm run dev
                     │    PostgreSQL DB    │
                     └─────────────────────┘
 ```
+
+## 🚀 RenewIQ Workflow
+
+```mermaid
+flowchart TD
+    A[👤 New User] --> B[Create Account]
+    B --> C[Automatic Category Initialization]
+    C --> D[Login]
+    D --> E[Dashboard]
+
+    E --> F[Manage Subscriptions]
+    F --> G[Add]
+    F --> H[Edit]
+    F --> I[Delete]
+
+    E --> J[Renewals]
+    E --> K[Analytics]
+    E --> L[Settings]
+```
+
 ## 🔮 Future Improvements
 
 - AI-powered subscription insights
