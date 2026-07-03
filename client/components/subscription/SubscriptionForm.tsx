@@ -28,7 +28,9 @@ export default function SubscriptionForm({
   onSuccess, subscription,
 }: SubscriptionFormProps) {
   console.log("Subscription:", subscription);
-  const { categories } = useCategories();
+  const { categories, loading } = useCategories();
+  console.log("Loading:", loading);
+console.log("Categories:", categories);
 
   const [formData, setFormData] = useState({
     name: "",
@@ -117,7 +119,7 @@ console.log("SUBSCRIPTION", JSON.stringify(subscription, null, 2));
 };
 
   
-
+  console.log("Categories:", categories);
   return (
     <form
       className="space-y-6"

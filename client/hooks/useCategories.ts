@@ -16,13 +16,16 @@ export function useCategories() {
 
   useEffect(() => {
     async function fetchCategories() {
-      try {
-        const data = await getCategories();
-        setCategories(data);
-      } finally {
-        setLoading(false);
-      }
-    }
+  try {
+    const data = await getCategories();
+
+    console.log("Fetched categories:", data);
+
+    setCategories(data);
+  } finally {
+    setLoading(false);
+  }
+}
 
     fetchCategories();
   }, []);

@@ -1,6 +1,7 @@
 "use client";
 
 import { useSubscriptions } from "@/hooks/useSubscriptions";
+import SpendingPieChart from "./SpendingPieChart";
 
 export default function AnalyticsPage() {
   const { subscriptions, loading } = useSubscriptions();
@@ -26,6 +27,24 @@ export default function AnalyticsPage() {
   const categories = new Set(
     subscriptions.map((sub) => sub.category.name)
   );
+
+  const categoryData = Object.values(
+  subscriptions.reduce((acc: any, sub) => {
+    const name = sub.category.name;
+
+    if (!acc[name]) {
+      acc[name] = {
+        name,
+        value: 0,
+      };
+    }
+
+    acc[name].value += sub.price;
+
+    return acc;
+  }, {})
+);
+
 
   return (
     <main className="space-y-8">
@@ -68,6 +87,8 @@ export default function AnalyticsPage() {
           </h2>
         </div>
       </div>
+      {/* Pie Chart */}
+      <SpendingPieChart data={categoryData} />
     </main>
   );
 }

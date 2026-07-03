@@ -1,8 +1,23 @@
 "use client";
 
+import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 
 export default function SettingsPage() {
+  const router = useRouter();
+
+  const user =
+    typeof window !== "undefined"
+      ? JSON.parse(localStorage.getItem("user") || "{}")
+      : {};
+
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    localStorage.removeItem("user");
+
+    router.push("/login");
+  };
+
   return (
     <main className="space-y-8">
       <div>
@@ -11,7 +26,7 @@ export default function SettingsPage() {
         </h1>
 
         <p className="text-muted">
-          Manage your RenewIQ preferences.
+          Manage your RenewIQ account.
         </p>
       </div>
 
@@ -21,14 +36,26 @@ export default function SettingsPage() {
           Profile
         </h2>
 
-        <div className="mt-4 space-y-2">
-          <p>
-            <span className="font-medium">Name:</span> Harshitha
-          </p>
+        <div className="mt-6 space-y-4">
+          <div>
+            <p className="text-sm text-muted">
+              Name
+            </p>
 
-          <p>
-            <span className="font-medium">Email:</span> Demo User
-          </p>
+            <p className="text-lg font-medium">
+              {user.name || "Unknown User"}
+            </p>
+          </div>
+
+          <div>
+            <p className="text-sm text-muted">
+              Email
+            </p>
+
+            <p className="text-lg font-medium">
+              {user.email || "No Email"}
+            </p>
+          </div>
         </div>
       </div>
 
@@ -38,12 +65,12 @@ export default function SettingsPage() {
           Currency
         </h2>
 
-        <p className="mt-2 text-muted">
-          Current Currency: INR ₹
+        <p className="mt-4 text-muted">
+          Indian Rupee (₹)
         </p>
       </div>
 
-      {/* Logout */}
+      {/* Account */}
       <div className="rounded-2xl border bg-white p-6 shadow-sm">
         <h2 className="text-xl font-semibold">
           Account
@@ -51,10 +78,26 @@ export default function SettingsPage() {
 
         <Button
           variant="destructive"
-          className="mt-4"
+          className="mt-6"
+          onClick={handleLogout}
         >
           Logout
         </Button>
+      </div>
+
+      {/* App */}
+      <div className="rounded-2xl border bg-white p-6 shadow-sm">
+        <h2 className="text-xl font-semibold">
+          About RenewIQ
+        </h2>
+
+        <p className="mt-4 text-muted">
+          RenewIQ v1.0.0
+        </p>
+
+        <p className="mt-2 text-sm text-muted">
+          Track and manage your recurring subscriptions in one place.
+        </p>
       </div>
     </main>
   );
